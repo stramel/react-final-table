@@ -1,10 +1,9 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import { render } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
-
 import { useTable } from '../hooks';
 import { ColumnType } from '../types';
+import { getBodyRows } from './test-helpers';
 
 const columns = [
   {
@@ -51,7 +50,7 @@ const Table = ({
       </thead>
       <tbody>
         {rows.map((row, idx) => (
-          <tr role="table-row" key={idx}>
+          <tr key={idx}>
             {row.cells.map((cell, idx) => (
               <td key={idx}>{cell.render()}</td>
             ))}
@@ -63,12 +62,12 @@ const Table = ({
 };
 
 test('Should render a basic table', () => {
-  render(<Table columns={columns} data={data} />);
+  const table = render(<Table columns={columns} data={data} />);
 
-  expect(screen.getByText('Frodo')).toBeInTheDocument();
-  expect(screen.getByText('Baggins')).toBeInTheDocument();
-  expect(screen.getByText('Samwise')).toBeInTheDocument();
-  expect(screen.getByText('Gamgee')).toBeInTheDocument();
+  expect(table.getByText('Frodo')).toBeInTheDocument();
+  expect(table.getByText('Baggins')).toBeInTheDocument();
+  expect(table.getByText('Samwise')).toBeInTheDocument();
+  expect(table.getByText('Gamgee')).toBeInTheDocument();
 });
 
 const reverseData = [
@@ -90,13 +89,13 @@ test('Should be equal regardless of field order in data', () => {
 });
 
 test('Should update table rows when data changes', () => {
-  const { rerender } = render(<Table columns={columns} data={data} />);
-  expect(screen.getAllByRole('table-row')).toHaveLength(2);
+  const table = render(<Table columns={columns} data={data} />);
+  expect(getBodyRows(table)).toHaveLength(2);
 
   let newData = [...data, { firstName: 'Bilbo', lastName: 'Baggins' }];
-  rerender(<Table columns={columns} data={newData} />);
+  table.rerender(<Table columns={columns} data={newData} />);
 
-  expect(screen.getAllByRole('table-row')).toHaveLength(3);
+  expect(getBodyRows(table)).toHaveLength(3);
 });
 
 const columnsWithRender: ColumnType<any>[] = [
@@ -112,9 +111,9 @@ const columnsWithRender: ColumnType<any>[] = [
 ];
 
 test('Should see custom row render HTML', () => {
-  render(<Table columns={columnsWithRender} data={data} />);
+  const table = render(<Table columns={columnsWithRender} data={data} />);
 
-  expect(screen.getAllByTestId('first-name')).toHaveLength(2);
+  expect(table.getAllByTestId('first-name')).toHaveLength(2);
 });
 
 const columnsWithColRender: ColumnType<any>[] = [
@@ -130,9 +129,9 @@ const columnsWithColRender: ColumnType<any>[] = [
 ];
 
 test('Should see custom column render HTML', () => {
-  render(<Table columns={columnsWithColRender} data={data} />);
+  const table = render(<Table columns={columnsWithColRender} data={data} />);
 
-  expect(screen.getAllByTestId('first-name')).toHaveLength(1);
+  expect(table.getAllByTestId('first-name')).toHaveLength(1);
 });
 
 // to supress console error from test output
