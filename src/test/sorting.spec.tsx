@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import { useTable } from '../hooks';
-import { ColumnType } from '../types';
+import { useTable, ColumnType } from '../index';
 import { makeData, makeSimpleData } from './makeData';
 import { getBodyRows, getRow } from './test-helpers';
 

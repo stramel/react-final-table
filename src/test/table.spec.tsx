@@ -1,8 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
-import { useTable } from '../hooks';
-import { ColumnType } from '../types';
+import { useTable, ColumnType } from '../index';
 import { getBodyRows } from './test-helpers';
 
 const columns = [

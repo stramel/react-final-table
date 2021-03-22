@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import { useTable } from '../hooks';
+import { useTable } from '../index';
 import { makeData } from './makeData';
 import { getBodyRows } from './test-helpers';
 

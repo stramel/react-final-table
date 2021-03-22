@@ -1,8 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { render, fireEvent } from '@testing-library/react';
 
-import { useTable } from '../hooks';
-import { ColumnType, RowType, DataType } from '../types';
+import { useTable, ColumnType, RowType, DataType } from '../index';
 import { makeData } from './makeData';
 
 const columns = [

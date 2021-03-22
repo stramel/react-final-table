@@ -1,8 +1,7 @@
 import React, { FC } from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import { useTable } from '../hooks';
+import { useTable, DataType, ColumnType, RowType } from '../index';
 import { makeSimpleData } from './makeData';
-import { DataType, ColumnType, RowType } from 'types';
 import { getBodyRows, getRow } from './test-helpers';
 
 const TableWithFilter = <T extends DataType>({
